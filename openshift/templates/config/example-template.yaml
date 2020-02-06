@@ -1,0 +1,128 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: example-spring-boot
+objects:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    creationTimestamp: null
+    labels:
+      app: example-spring-boot
+    name: example-spring-boot
+  spec:
+    dockerImageRepository: appuio/example-spring-boot
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    creationTimestamp: null
+    labels:
+      app: example-spring-boot
+    name: example-spring-boot
+  spec:
+    replicas: ${{REPLICA_COUNT}}
+    selector:
+      app: example-spring-boot
+      deploymentconfig: example-spring-boot
+    strategy:
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: example-spring-boot
+          deploymentconfig: example-spring-boot
+      spec:
+        containers:
+        - env:
+          - name: MY_NAME
+            value: ${CUSTOMER_NAME}
+          image: appuio/example-spring-boot
+          imagePullPolicy: IfNotPresent
+          name: example-spring-boot
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 9000
+              scheme: HTTP
+            initialDelaySeconds: 30
+            timeoutSeconds: 2
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - example-spring-boot
+        from:
+          kind: ImageStreamTag
+          name: example-spring-boot:latest
+      type: ImageChange
+  status: {}  
+- apiVersion: v1
+  kind: Route
+  metadata:
+    creationTimestamp: null
+    labels:
+      app: example-spring-boot
+    name: example-spring-boot
+  spec:
+    host: ${APPLICATION_DOMAIN}
+    port:
+      targetPort: ${{PORT}}
+    to:
+      kind: Service
+      name: example-spring-boot
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: null
+    labels:
+      app: example-spring-boot
+    name: example-spring-boot
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: ${{PORT}}
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: example-spring-boot
+      deploymentconfig: example-spring-boot
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+parameters:
+- description: number of pods / replicas
+  displayName: number of pods
+  name: REPLICA_COUNT
+  required: true
+  value: '1'
+- description: port number of database
+  displayName: databse port
+  name: PORT
+  required: true
+  value: '8080'
+- description: CUSTOMER_NAME environment variable
+  displayName: customer name
+  name: CUSTOMER_NAME
+  required: true
+- description: The exposed hostname that will route to the service, if left blank a value will be defaulted.
+  name: APPLICATION_DOMAIN
