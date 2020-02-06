@@ -180,8 +180,10 @@ You passed a parameter too much. It is not defined inside the template. -> Check
 
 ### unrecognized type: int32
 
+Problems with numeric types like int32, int64, ...
+
 ```bash
 Error from server: unrecognized type: int32
 ```
 
-Problem with numeric values, see [Parametrize numeric values](#parametrize-numeric-values).
+To solve this issues, see [Parametrize numeric values](#parametrize-numeric-values).
