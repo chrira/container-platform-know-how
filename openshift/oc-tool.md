@@ -2,9 +2,39 @@
 
 Official documentation: <https://docs.openshift.com/container-platform/3.11/cli_reference/basic_cli_operations.html>
 
-## get resource types
+## OpenShift resources
+
+### OpenShift / Kubernetes resources
+
+Get informations about the OpenShift / Kubernetes resource objects.
+
+Dive into resource description:
+
+1. `oc explain DeploymentConfig`
+1. `oc explain DeploymentConfig.spec`
+1. `oc explain DeploymentConfig.spec.strategy`
+
+Full description of a DeploymentConfig: `oc explain dc --recursive=true`
+
+### OpenShift API resources
+
+Get informations about the resources used by calling the OpenShift API.
+
+#### get resource types
 
 Get all resource types: `oc api-resources | sort`
+
+#### get OpenShift API objects
+
+Get the definition of a resource. Path: <https://OPENSHIFT_API_URL/apis/VERSION>
+
+Example for the DeploymentConfig (kind: DeploymentConfig, version: apps.openshift.io/v1)
+
+```bash
+curl -k -H "Authorization: Bearer $(oc whoami -t)" -H 'Accept: application/yaml' https://OPENSHIFT_API_URL/apis/apps.openshift.io/v1
+```
+
+Documentation: <https://docs.openshift.com/container-platform/3.11/rest_api/index.html>
 
 ## access two cluster
 
