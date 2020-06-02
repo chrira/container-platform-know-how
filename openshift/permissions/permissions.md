@@ -4,7 +4,7 @@
 
 All possible roles
 
-```
+```bash
 oc describe clusterrole
 oc get rolebindings
 ```
