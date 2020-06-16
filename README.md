@@ -22,5 +22,6 @@ Collection of how-to's, code, config ...
 * [Automation / Build Servers](openshift/automation.md)
 * [Builds](openshift/builds.md)
 * [Permissions](openshift/permissions/permissions.md)
+* [Service Accounts](openshift/permissions/service-account.md)
 * [OpenShift CLI: oc-tool](openshift/oc-tool.md)
 * [Templates](openshift/templates/templates.md)
