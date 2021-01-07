@@ -7,6 +7,7 @@ Collection of how-to's, code, config ...
 [Docker](https://www.docker.com/) specific collection: [docker](docker/)
 
 * [Automation / Build Servers](docker/automation.md)
+* [Dockerfile builds](docker/dockerfiles.md)
 
 ## Kubernetes
 
