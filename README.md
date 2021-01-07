@@ -2,6 +2,12 @@
 
 Collection of how-to's, code, config ...
 
+## Container
+
+[Open Container Initiative](https://opencontainers.org/), short oci, specific collection: [container](container/)
+
+* [Container Image optimization](container/image-optimization.md)
+
 ## Docker
 
 [Docker](https://www.docker.com/) specific collection: [docker](docker/)
