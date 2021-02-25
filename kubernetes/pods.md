@@ -92,6 +92,59 @@ containers:
 
 ## Container File Replacements
 
+### Mount ConfigMaps
+
+Create ConfigMap from file:
+
+```bash
+oc create configmap my-configmap --from-file=./config/application.xml
+```
+
+Define volume from ConfigMap:
+
+```yaml
+    spec:
+      containers:
+        ...
+      volumes:
+        - name: my-configmap-volume
+          configMap:
+            name: my-configmap
+```
+
+#### Mount folder
+
+This will overwrite the whole folder inside the container:
+
+```yaml
+    spec:
+      containers:
+      - name: my-container
+        ...
+        volumeMounts:
+        - name: my-configmap-volume
+          mountPath: /opt/app/config
+```
+
+> The folder `/opt/app/config` will hold all files from the ConfigMap.
+
+#### Mount single file
+
+This will mount one file into a folder:
+
+```yaml
+    spec:
+      containers:
+      - name: my-container
+        ...
+        volumeMounts:
+        - name: my-configmap-volume
+          mountPath: /opt/app/config/application.xml
+          subPath: application.xml
+```
+
+> The file is read only!
+
 ### Mount Secrets
 
 #### Full Customized Secret Mount
