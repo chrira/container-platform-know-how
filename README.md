@@ -21,6 +21,7 @@ Collection of how-to's, code, config ...
 
 * [Automation / Build Servers](kubernetes/automation.md)
 * [Pods](kubernetes/pods.md)
+* [rsyslog logging](kubernetes/rsyslog-logging/rsyslog-logging.md)
 
 ## OpenShift
 
