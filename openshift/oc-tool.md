@@ -16,7 +16,8 @@ Dive into resource description:
 
 Full description of a DeploymentConfig: `oc explain dc --recursive=true`
 
-JSON schema definitions: <https://github.com/garethr/openshift-json-schema>
+* Online reference: https://kubespec.dev/
+* JSON schema definitions: https://github.com/garethr/openshift-json-schema
 
 ### OpenShift API resources
 
